@@ -28,7 +28,7 @@ class managing:
                     hashobj.hashing(FIFO)
                     data = hashobj.spliting()
                     hashed.append(data)
-                    print(self.lenghtqueue)
+                    #print(self.lenghtqueue)
                 
         
 class Provinding(threading.Thread, managing):
@@ -70,6 +70,8 @@ for _ in range(5):
         consumer = consuming()
         consumer.start()
         threads.append(consumer)
+for _ in range(5):
+     queues.put(None)
 
 for thread in threads:
         thread.join()
