@@ -38,7 +38,7 @@ class managing:
                     sufixhash.append(hashobj.sufix)
                     #print(oghash)
                 
-#class to initialize the the producer thread, will manage the input data as mentioned       
+#class to initialize the producer thread, will manage the input data as mentioned       
 class Provinding(threading.Thread, managing):
 
     def __init__(self) -> None:
@@ -47,7 +47,7 @@ class Provinding(threading.Thread, managing):
     def run(self):
         self.reading_passwords(password)
 
-#class to initialize the consumer thread, it will reciving data from the producer to make write operations.
+#class to initialize the consumer thread, it will receiving data from the producer to make write operations.
 class consuming(threading.Thread, managing):
     
     def __init__(self):
@@ -86,7 +86,7 @@ def main()-> None:
     for _ in range(5):
      queues.put(None)
     
-    #wait all the threads to be done and keep going to next stop
+    #wait all the threads to be done
     for thread in threads:
         thread.join()
 

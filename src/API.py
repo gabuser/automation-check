@@ -2,7 +2,7 @@ from requests import get
 
 class APIs:
     #function to consume the API
-    #this function use http comunication to request datas from the endpoint especified
+    #this function use http communication to request data from the endpoint especified
     def requesting(self,slice:str)->None:
         response= get(f"https://api.pwnedpasswords.com/range/{slice}")
         
@@ -13,7 +13,7 @@ class APIs:
         self.formated =list()
 
         while(counting!= self.lenght):
-                #get the individual values from the list, one by one until the -n valaues
+                #get the individual values from the list, one by one until the -n values
                 removing_numbers= self.organizing[counting]
                 
                 #this will format, removing the numbers that come from the response
@@ -23,7 +23,7 @@ class APIs:
                 self.formated.append(formating)
                 counting+=1
         
-        #this will sort the list to the binary search works
+        #this will sort the list for the binary search to works
         self.sorting = sorted(self.formated)
     
     #this function use binary search to fetch all the sufix hash coming from the API
