@@ -7,8 +7,8 @@ import API
 locking = threading.Lock()
 queues = queue.Queue()
 password = list()
-modhash = list()
-oghash= list()
+prefixhash = list()
+sufixhash= list()
 threads = list()
 hashobj = hashh.hashchunk()
 api = API.APIs()
@@ -20,7 +20,7 @@ class managing:
             queues.put(r)
 
     def returninghash(self):
-        global password, modhash,oghash
+        global password, prefixhash,sufixhash
         self.lenghtqueue = queues.qsize()
 
         for h in range(self.lenghtqueue):
@@ -30,8 +30,8 @@ class managing:
                 with locking:
                     hashobj.hashing(FIFO)
                     data = hashobj.spliting()
-                    modhash.append(data)
-                    oghash.append(hashobj.sufix)
+                    prefixhash.append(data)
+                    sufixhash.append(hashobj.sufix)
                     #print(oghash)
                 
         
@@ -87,15 +87,15 @@ def singlethread()->None:
     counted =0
 
     while(counted !=countinghash):
-        api.requesting(modhash[counted])
+        api.requesting(prefixhash[counted])
 
-        result = api.search(oghash[counted])
+        result = api.search(sufixhash[counted])
 
         if(result):
             print(f"\n password were exposed once:{password[counted]}")
         
         else:
-            print(f"password hash does not seems to be on the API")
+            print(f"password hash does not seems to be on the API list")
         counted+=1
 main()
 singlethread()

@@ -17,7 +17,7 @@ class APIs:
 
         self.sorting = sorted(self.formated)
 
-    def search(self,oghash:str)-> bool:
+    def search(self,mainhash:str)-> bool:
         self.initial = 0
         self.ending = len(self.sorting)-1
         
@@ -25,10 +25,10 @@ class APIs:
             startpoint = (self.initial+self.ending)//2
             value=self.sorting[startpoint]
 
-            if(value == oghash):
+            if(value == mainhash):
                 return True
             
-            if(value < oghash ):
+            if(value < mainhash):
                 self.initial = startpoint+1
             
             else:
