@@ -2,13 +2,16 @@ import queue
 import threading
 import sys
 import hashh
+import API
 
 locking = threading.Lock()
 queues = queue.Queue()
 password = list()
-hashed = list()
+modhash = list()
+oghash= list()
 threads = list()
 hashobj = hashh.hashchunk()
+api = API.APIs()
 
 class managing:
 
@@ -27,8 +30,9 @@ class managing:
                 with locking:
                     hashobj.hashing(FIFO)
                     data = hashobj.spliting()
-                    hashed.append(data)
-                    print(hashed)
+                    modhash.append(data)
+                    oghash.append(hashobj.hashed)
+                    #print(hashed)
                 
         
 class Provinding(threading.Thread, managing):
@@ -48,31 +52,35 @@ class consuming(threading.Thread, managing):
         self.returning = self.returninghash
         self.returning()
 
-while True:
-    try:
-        insert = input("insert a password you want to break it or q and ctr+c to quit:")
-        if(insert == 'q'):
-            break
+def main()-> None:
+    while True:
+        try:
+            insert = input("insert a password you want to break it or q and ctr+c to quit:")
+            if(insert == 'q'):
+                break
 
-        else:
-            dspace = insert.replace(" ", "")
-            password.append(dspace)
+            else:
+                dspace = insert.replace(" ", "")
+                password.append(dspace)
 
-    except KeyboardInterrupt:
-         sys.exit()
+        except KeyboardInterrupt:
+             sys.exit()
 
-for _ in range(1):
+    for _ in range(1):
         producer = Provinding()
         producer.start()
         threads.append(producer)
 
-for _ in range(5):
+    for _ in range(5):
         consumer = consuming()
         consumer.start()
         threads.append(consumer)
 
-for _ in range(5):
+    for _ in range(5):
      queues.put(None)
 
-for thread in threads:
+    for thread in threads:
         thread.join()
+
+def singlethread()->None:
+    pass
