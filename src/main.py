@@ -20,7 +20,7 @@ class managing:
             queues.put(r)
 
     def returninghash(self):
-        global password, hashed
+        global password, modhash,oghash
         self.lenghtqueue = queues.qsize()
 
         for h in range(self.lenghtqueue):
@@ -31,8 +31,8 @@ class managing:
                     hashobj.hashing(FIFO)
                     data = hashobj.spliting()
                     modhash.append(data)
-                    oghash.append(hashobj.hashed)
-                    #print(hashed)
+                    oghash.append(hashobj.sufix)
+                    #print(oghash)
                 
         
 class Provinding(threading.Thread, managing):
@@ -55,7 +55,7 @@ class consuming(threading.Thread, managing):
 def main()-> None:
     while True:
         try:
-            insert = input("insert a password you want to break it or q and ctr+c to quit:")
+            insert = input("insert a password you want to search or q to continuous and ctr+c to quit:")
             if(insert == 'q'):
                 break
 
@@ -83,4 +83,19 @@ def main()-> None:
         thread.join()
 
 def singlethread()->None:
-    pass
+    countinghash = len(password)
+    counted =0
+
+    while(counted !=countinghash):
+        api.requesting(modhash[counted])
+
+        result = api.search(oghash[counted])
+
+        if(result):
+            print(f"\n password were exposed once:{password[counted]}")
+        
+        else:
+            print(f"password hash does not seems to be on the API")
+        counted+=1
+main()
+singlethread()

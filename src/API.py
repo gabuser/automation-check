@@ -1,45 +1,35 @@
 from requests import get
-counting =0
-formated = list()
+#ormated = list()
 class APIs:
 
     def requesting(self,slice:str)->None:
-        RESPONSE = get(f"https://api.pwnedpasswords.com/range/{slice}")
-        self.organizing = RESPONSE.text.split("\n")
-        self.lenght = len(self.organizing)
+        response= get(f"https://api.pwnedpasswords.com/range/{slice}")
+        self.organizing = response.text.splitlines()
+        counting = 0
+        self.lenght = len(self.organizing)-1
+        self.formated =list()
 
-        while(counting !=self.lenght):
-            formating = RESPONSE.text.split(":")[counting]
-            formated.append(formating)
-            counting+=1
+        while(counting!= self.lenght):
+                removing_numbers= self.organizing[counting]
+                formating = removing_numbers.split(":")[0].strip()
+                self.formated.append(formating)
+                counting+=1
+
+        self.sorting = sorted(self.formated)
 
     def search(self,oghash:str)-> bool:
         self.initial = 0
-        self.ending = len(formated)-1
-
+        self.ending = len(self.sorting)-1
+        
         while(self.initial <=self.ending):
             startpoint = (self.initial+self.ending)//2
-            value=sorted(formated[startpoint])
+            value=self.sorting[startpoint]
 
             if(value == oghash):
                 return True
             
             if(value < oghash ):
-                self.initial+=1
+                self.initial = startpoint+1
             
             else:
-                self.ending-=1
-        
-    """a = response.text.split("\n")
-    tam = len(a)
-    listas = []
-    while counting != tam:
-        formating = response.text.split(":")[counting]
-        listas.append(formating)
-
-        counting+=1
-#print(a[tam])
-#print(listas[0][tam].replace(ult, ""))
-#18a98
-print(a[tam-1])
-print(listas[tam-1])"""
+                self.ending = startpoint-1
